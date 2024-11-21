@@ -1,0 +1,181 @@
+/* CreateRoomPuzzle.css */
+.room-details {
+  max-width: 800px;
+  margin: 0 auto;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.title-enigma {
+  text-align: center;
+  color: #333;
+  padding-left: 0;
+}
+
+.puzzle-container {
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.puzzle-container h2 {
+  margin: 0 0 10px;
+  color: #007bff;
+}
+
+.puzzle-container p {
+  margin: 5px 0;
+}
+
+.artifact-container {
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f1f1f1;
+}
+
+/* Estilização para o texto dos artefatos */
+.artifact-container label {
+  display: block; /* Faz o label ocupar a largura total */
+  margin-bottom: 5px; /* Espaçamento abaixo do label */
+}
+
+/* Estilização para os campos de entrada */
+.artifact-container input,
+.puzzle-container input {
+  width: calc(100% - 60px); /* Largura total menos espaço para a imagem */
+  padding: 8px; /* Espaçamento interno */
+  margin-top: 5px; /* Espaçamento acima do input */
+  border: 1px solid #ccc; /* Bordas do campo de entrada */
+  border-radius: 4px; /* Bordas arredondadas */
+  box-sizing: border-box; /* Inclui padding e border na largura total */
+}
+
+.artifact-textarea {
+  width: calc(100% - 60px); /* Largura total menos espaço para a imagem */
+  padding: 8px; /* Espaçamento interno */
+  margin-top: 5px; /* Espaçamento acima do textarea */
+  border: 1px solid #ccc; /* Bordas do campo de entrada */
+  border-radius: 4px; /* Bordas arredondadas */
+  box-sizing: border-box; /* Inclui padding e border na largura total */
+  resize: vertical; /* Permite redimensionar apenas verticalmente */
+  margin-bottom: 0;
+  height: 77px;
+}
+
+/* Estilização para os contêineres de entrada */
+.input-container {
+  display: flex; /* Alinha os filhos em linha */
+  align-items: center; /* Alinha os itens ao topo */
+  margin: 10px 0; /* Adiciona margem vertical */
+  width: 100%; /* Faz o contêiner ocupar toda a largura disponível */
+}
+
+/* Estilização para as imagens */
+.puzzle-image,
+.artifact-image {
+  width: 100%; /* Tamanho da imagem ocupa toda a largura do contêiner */
+  height: auto; /* Mantém a proporção */
+  border-radius: 4px; /* Bordas arredondadas para as imagens */
+  margin-left: 10px; /* Espaço à esquerda da imagem */
+  max-width: 160px; /* Define uma largura máxima para as imagens */
+}
+
+.artifact-container p {
+  margin: 5px 0;
+}
+
+.input-error {
+  border: 2px solid red !important;
+}
+
+.error-message-pz {
+  color: red !important;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.submit-button {
+  width: 20%;
+  margin-left: 300px;
+}
+
+span {
+  color: #5f5e5e;
+  font-style: italic;
+}
+
+.help-button-puzzle {
+  position: relative;
+  top: -90px;
+  left: 780px;
+  background-color: #ffeb3b;
+  color: #333;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.help-button-puzzle:hover {
+  background-color: #fdd835;
+}
+
+/* Estilos do popup de instruções */
+.instructions-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  z-index: 1000;
+}
+
+.popup-content {
+  position: relative;
+}
+
+.popup-content h3 {
+  margin-top: 0;
+  font-size: 20px;
+  color: #333;
+}
+
+.popup-content p {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+/* Botão de fechar no popup */
+.close-button {
+  position: absolute;
+  top: -2px;
+  right: -10px;
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #333;
+}
+
+.close-button:hover {
+  background: transparent;
+}
