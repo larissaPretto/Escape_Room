@@ -1,0 +1,43 @@
+services:
+  db-escape:
+    image: mysql:8.0
+    container_name: bd-escape
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: Alemao890. # Senha do root
+      MYSQL_DATABASE: escape # Nome do banco de dados a ser criado
+    volumes:
+      - ./bd-escape/scripts:/docker-entrypoint-initdb.d # Scripts de inicialização do banco
+      - ./bd-escape/data:/var/lib/mysql # Persistência dos dados
+    networks:
+      - app-network
+
+  api-escape:
+    build:
+      context: ./api-escape
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./api-escape/.env # Arquivo de variáveis de ambiente
+    depends_on:
+      - db-escape # Garante que o banco esteja em execução antes de iniciar a API
+    networks:
+      - app-network
+    restart: always
+
+  site_escape:
+    build:
+      context: ./site_escape
+      dockerfile: Dockerfile
+    ports:
+      - "3001:80"
+    depends_on:
+      - api-escape # Garante que a API esteja em execução antes de iniciar o site
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
