@@ -5,8 +5,8 @@ services:
     ports:
       - "3306:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: Alemao890. # Senha do root
-      MYSQL_DATABASE: escape # Nome do banco de dados a ser criado
+      MYSQL_ROOT_PASSWORD: Alemao890.
+      MYSQL_DATABASE: escape
     volumes:
       - ./bd-escape/scripts:/docker-entrypoint-initdb.d # Scripts de inicialização do banco
       - ./bd-escape/data:/var/lib/mysql # Persistência dos dados
@@ -20,9 +20,9 @@ services:
     ports:
       - "3000:3000"
     env_file:
-      - ./api-escape/.env # Arquivo de variáveis de ambiente
+      - ./api-escape/.env
     depends_on:
-      - db-escape # Garante que o banco esteja em execução antes de iniciar a API
+      - db-escape
     networks:
       - app-network
     restart: always
@@ -34,7 +34,7 @@ services:
     ports:
       - "3001:80"
     depends_on:
-      - api-escape # Garante que a API esteja em execução antes de iniciar o site
+      - api-escape
     networks:
       - app-network
 
