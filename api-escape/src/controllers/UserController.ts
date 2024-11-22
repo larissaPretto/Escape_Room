@@ -69,7 +69,7 @@ const getUserById = async (req: Request, res: Response): Promise<Response> => {
 const createUser = async (req: Request, res: Response): Promise<Response> => {
   try {
     const { username, password, email, creator } = req.body;
-    console.log(req.body);
+
     const newUser = await UserService.createUser({
       username,
       password,

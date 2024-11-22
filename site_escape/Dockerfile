@@ -22,6 +22,9 @@ FROM nginx:1.25-alpine
 # Copie os arquivos da build para a pasta padrão do Nginx
 COPY --from=build /usr/src/app/build /usr/share/nginx/html
 
+# Copie a configuração personalizada do Nginx
+COPY default.conf /etc/nginx/conf.d/default.conf
+
 # Exponha a porta 80
 EXPOSE 80
 

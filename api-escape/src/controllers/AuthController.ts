@@ -4,7 +4,7 @@ import AuthService from "../services/AuthService";
 const login = async (req: Request, res: Response): Promise<Response> => {
   try {
     const { email, password } = req.body;
-    console.log(email, password);
+
     const loginResponse = await AuthService.login(email, password);
 
     if (loginResponse) {

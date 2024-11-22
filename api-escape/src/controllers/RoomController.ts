@@ -116,8 +116,7 @@ const createRoom = async (req: Request, res: Response): Promise<Response> => {
       endgame,
       victory,
     } = req.body;
-    console.log(req.body);
-    // Validação do Scenario ID
+
     if (!scenarioId) {
       return res.status(400).json({ message: "Scenario ID is required." });
     }
@@ -135,7 +134,6 @@ const createRoom = async (req: Request, res: Response): Promise<Response> => {
       victory,
     };
 
-    console.log(roomData);
     const room = await RoomService.createRoom(roomData);
     return res.status(201).json(room);
   } catch (error) {
