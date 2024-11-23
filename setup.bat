@@ -1,70 +1,58 @@
 @echo off
 echo Script iniciado...
 
-:: Verificar se o script está sendo executado como administrador
+:: Verificar se o script estï¿½ sendo executado como administrador
 openfiles >nul 2>nul
 IF %ERRORLEVEL% NEQ 0 (
     echo O script precisa ser executado como administrador.
-    echo Por favor, clique com o botão direito e selecione "Executar como administrador".
+    echo Por favor, clique com o botï¿½o direito e selecione "Executar como administrador".
     pause
     exit /b
 )
 
-:: Verificar se o Docker está instalado
+:: Verificar se o Docker estï¿½ instalado
 echo Verificando se o Docker esta instalado...
 where docker >nul 2>nul
 IF %ERRORLEVEL% NEQ 0 (
-    echo Docker não está instalado. Baixe e instale o Docker Desktop manualmente: https://www.docker.com/products/docker-desktop
+    echo Docker nï¿½o estï¿½ instalado. Baixe e instale o Docker Desktop manualmente: https://www.docker.com/products/docker-desktop
     pause
     exit /b
 )
 echo Docker esta instalado.
 
-:: Verificar se o WSL está atualizado
+:: Verificar se o WSL estï¿½ atualizado
 echo Verificando se o WSL esta atualizado...
 wsl --update >nul 2>nul
 IF %ERRORLEVEL% NEQ 0 (
     echo Atualizando o WSL...
     wsl --update
-    echo Atualização concluída. Reinicie o computador para aplicar as mudanças.
+    echo Atualizaï¿½ï¿½o concluï¿½da. Reinicie o computador para aplicar as mudanï¿½as.
     pause
     exit /b
 )
 echo WSL esta atualizado.
 
-:: Obter o IP do host (IPv4)
-echo Obtendo o IP do host...
-for /f "tokens=2 delims=:" %%A in ('ipconfig ^| findstr /c:"IPv4" ^| findstr /v "127.0.0.1"') do (
+:: Obter o primeiro IPv4 vï¿½lido
+echo Obtendo o primeiro endereï¿½o IPv4...
+for /f "tokens=2 delims=:" %%A in ('ipconfig ^| findstr "Endereï¿½o IPv4"') do (
     set IP=%%A
+    goto :break_loop
 )
+:break_loop
 
-:: Limpar espaços no IP
+:: Remover espaï¿½os adicionais
 set IP=%IP: =%
-
 if "%IP%"=="" (
-    echo Não foi possivel obter o IP do host. Verifique sua conexão de rede.
+    echo Nï¿½o foi possï¿½vel obter o IP do host. Verifique sua conexï¿½o de rede.
     pause
     exit /b
 )
 echo IP do host: %IP%
 
-:: Configurar DNS localmente
-echo Configurando DNS local...
-set HOSTS_FILE=C:\Windows\System32\drivers\etc\hosts
-
-:: Remover qualquer entrada existente para escape-room-page diretamente do arquivo hosts
-echo Removendo entradas anteriores para escape-room-page...
-powershell -Command "(Get-Content %HOSTS_FILE%) | Where-Object {$_ -notmatch 'escape-room-page'} | Set-Content %HOSTS_FILE%"
-
-:: Adicionar a nova entrada para o IP correto
-echo %IP% escape-room-page>> %HOSTS_FILE%
-echo Entrada DNS adicionada: escape-room-page -> %IP%
-
 :: Verificar portas no firewall
 echo Verificando portas no firewall...
-
 setlocal enabledelayedexpansion
-set PORTS=3306 3000 3001
+set PORTS=3306 33060 3000 3001
 
 for %%P in (%PORTS%) do (
     netsh advfirewall firewall show rule name="Porta %%P" >nul 2>nul
@@ -74,27 +62,42 @@ for %%P in (%PORTS%) do (
         netsh advfirewall firewall add rule name="Porta %%P" dir=out action=allow protocol=TCP localport=%%P >nul
         echo Porta %%P adicionada.
     ) else (
-        echo Porta %%P ja
-        
-         configurada.
+        echo Porta %%P ja configurada.
     )
 )
 
 docker info >nul 2>nul
 IF %ERRORLEVEL% NEQ 0 (
-    echo Docker não esta rodando corretamente. Certifique-se de que o Docker Desktop está em execução.
+    echo Docker nï¿½o esta rodando corretamente. Certifique-se de que o Docker Desktop estï¿½ em execuï¿½ï¿½o.
     pause
     exit /b
 )
 echo Docker esta funcionando corretamente.
 
-:: Mudar para o diretório onde o arquivo docker-compose.yml está
+:: Mudar para o diretï¿½rio onde o arquivo docker-compose.yml estï¿½
 cd /d "%~dp0"
+
+:: API_URL para o backend
+cd api-escape
+echo. >> .env 
+echo API_URL=http://%IP% >> .env
+cd ..
+
+:: Para o Frontend (site), se necessÃ¡rio
+cd site_escape
+echo. >> .env 
+echo REACT_APP_API_URL=http://%IP%:3000 >> .env
+cd ..
 
 :: Iniciando os containers
 echo Iniciando os containers com Docker Compose...
 docker-compose up --build -d
 
-:: Verificar acesso aos containers
-echo Acessando o site atraves de http://escape-room-page:3001...
+:: Exibir link para o usuï¿½rio
+set URL=http://%IP%:3001
+echo Acesse o site em: %URL%
+
+:: Abrir o site no navegador padrï¿½o
+start %URL%
+
 pause

@@ -19,6 +19,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
+    environment:
+      HOST: 0.0.0.0
     env_file:
       - ./api-escape/.env
     depends_on:
@@ -33,6 +35,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3001:80"
+    env_file:
+      - ./site_escape/.env
     depends_on:
       - api-escape
     networks:

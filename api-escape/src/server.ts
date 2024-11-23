@@ -31,7 +31,7 @@ app.use(
   scenarioRouter
 );
 
-app.listen(config.server.port, () => {
+app.listen(config.server.port, "0.0.0.0", () => {
   console.log(`Server is running on http://localhost:${config.server.port}`);
 });
 

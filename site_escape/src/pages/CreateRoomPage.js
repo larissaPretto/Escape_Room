@@ -26,7 +26,7 @@ const CreateRoomPage = () => {
     const fetchScenarios = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/scenarios/all",
+          `${process.env.REACT_APP_API_URL}/scenarios/all`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,

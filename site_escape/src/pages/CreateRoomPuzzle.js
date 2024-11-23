@@ -18,7 +18,7 @@ const CreateRoomPuzzle = () => {
     const fetchRoomData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/rooms/${roomId}`
+          `${process.env.REACT_APP_API_URL}/rooms/${roomId}`
         );
         setRoomData(response.data);
       } catch (error) {
@@ -95,7 +95,7 @@ const CreateRoomPuzzle = () => {
 
     if (validateForm()) {
       try {
-        await axios.put(`http://localhost:3000/rooms/puzzles`, {
+        await axios.put(`${process.env.REACT_APP_API_URL}/rooms/puzzles`, {
           puzzles: roomData.puzzles,
         });
         alert("Sala criada com sucesso! Veja o código de acesso no dashboard.");

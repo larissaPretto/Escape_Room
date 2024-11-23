@@ -20,6 +20,7 @@ interface Config {
 export default {
   server: {
     port: Number(process.env.PORT) || 3000,
+    host: process.env.SERVER_HOST || "0.0.0.0",
   },
   database: {
     host: process.env.DB_HOST,

@@ -6,7 +6,7 @@ import "../styles/CreateRoomDataBasic.css";
 const findOrCreateSubject = async (subjectName, subjects, setSubjects) => {
   try {
     const response = await axios.get(
-      `http://localhost:3000/subjects/find_create/${subjectName}`,
+      `${process.env.REACT_APP_API_URL}/subjects/find_create/${subjectName}`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -25,7 +25,7 @@ const findOrCreateSubject = async (subjectName, subjects, setSubjects) => {
 const findOrCreateContent = async (contentName, contents, setContents) => {
   try {
     const response = await axios.get(
-      `http://localhost:3000/contents/find_create/${contentName}`,
+      `${process.env.REACT_APP_API_URL}/contents/find_create/${contentName}`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -114,7 +114,7 @@ const CreateRoomDataBasic = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:3000/rooms", {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/rooms`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

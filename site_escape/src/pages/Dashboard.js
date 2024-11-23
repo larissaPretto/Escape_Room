@@ -18,7 +18,7 @@ const DashboardPage = () => {
     const fetchRooms = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/rooms/user/${user.idUser}`,
+          `${process.env.REACT_APP_API_URL}/rooms/user/${user.idUser}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
