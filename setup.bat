@@ -1,32 +1,32 @@
 @echo off
 echo Script iniciado...
 
-:: Verificar se o script est� sendo executado como administrador
+:: Verificar se o script esta sendo executado como administrador
 openfiles >nul 2>nul
 IF %ERRORLEVEL% NEQ 0 (
     echo O script precisa ser executado como administrador.
-    echo Por favor, clique com o bot�o direito e selecione "Executar como administrador".
+    echo Por favor, clique com o botao direito e selecione "Executar como administrador".
     pause
     exit /b
 )
 
-:: Verificar se o Docker est� instalado
+:: Verificar se o Docker esta instalado
 echo Verificando se o Docker esta instalado...
 where docker >nul 2>nul
 IF %ERRORLEVEL% NEQ 0 (
-    echo Docker n�o est� instalado. Baixe e instale o Docker Desktop manualmente: https://www.docker.com/products/docker-desktop
+    echo Docker nao esta instalado. Baixe e instale o Docker Desktop manualmente: https://www.docker.com/products/docker-desktop
     pause
     exit /b
 )
 echo Docker esta instalado.
 
-:: Verificar se o WSL est� atualizado
+:: Verificar se o WSL esta atualizado
 echo Verificando se o WSL esta atualizado...
 wsl --update >nul 2>nul
 IF %ERRORLEVEL% NEQ 0 (
     echo Atualizando o WSL...
     wsl --update
-    echo Atualiza��o conclu�da. Reinicie o computador para aplicar as mudan�as.
+    echo Atualiza��o concluida. Reinicie o computador para aplicar as mudan�as.
     pause
     exit /b
 )
@@ -43,7 +43,7 @@ for /f "tokens=2 delims=:" %%A in ('ipconfig ^| findstr "Endere�o IPv4"') do (
 :: Remover espa�os adicionais
 set IP=%IP: =%
 if "%IP%"=="" (
-    echo N�o foi poss�vel obter o IP do host. Verifique sua conex�o de rede.
+    echo N�o foi possivel obter o IP do host. Verifique sua conex�o de rede.
     pause
     exit /b
 )
@@ -74,20 +74,40 @@ IF %ERRORLEVEL% NEQ 0 (
 )
 echo Docker esta funcionando corretamente.
 
-:: Mudar para o diret�rio onde o arquivo docker-compose.yml est�
+:: Mudar para o diretorio onde o arquivo docker-compose.yml esta
 cd /d "%~dp0"
 
 :: API_URL para o backend
 cd api-escape
-echo. >> .env 
+:: Remover linhas duplicadas de API_URL
+findstr /v "API_URL=" .env > .env.temp || echo. > .env.temp
+move /y .env.temp .env >nul
+:: Adicionar a nova linha no final do arquivo
 echo API_URL=http://%IP% >> .env
 cd ..
 
-:: Para o Frontend (site), se necessário
+:: Para o Frontend 
 cd site_escape
-echo. >> .env 
+:: Verificar se a linha REACT_APP_API_URL já existe
+findstr /v "REACT_APP_API_URL=" .env > .env.temp || echo. > .env.temp
+:: Sobrescrever o arquivo original com o arquivo atualizado
+move /y .env.temp .env >nul
+:: Adicionar a nova linha no final do arquivo
 echo REACT_APP_API_URL=http://%IP%:3000 >> .env
 cd ..
+
+:: Caminho da pasta do jogo
+set GAME_DIR=game
+
+:: Criar a pasta 'config' se não existir
+if not exist "%GAME_DIR%\config" (
+    mkdir "%GAME_DIR%\config"
+)
+
+:: Criar o arquivo config.json
+echo { > %GAME_DIR%\config\config.json
+echo     "API_URL": "http://%IP%:3000/" >> %GAME_DIR%\config\config.json
+echo } >> %GAME_DIR%\config\config.json
 
 :: Iniciando os containers
 echo Iniciando os containers com Docker Compose...

@@ -1,27 +1,29 @@
 # Escape Room Educacional
 
-Este projeto é um jogo educacional no estilo "Escape Room", onde os professores podem personalizar o conteúdo dos desafios para os alunos.
+Este projeto é um jogo educacional no estilo Escape Room, onde os professores podem personalizar o conteúdo dos desafios para o seu contexto educacional.
 
 ### Pré-requisitos
 
-- Docker (https://www.docker.com/products/docker-desktop/).
+Antes de começar, certifique-se de ter o seguinte instalado:
+
+- Docker Desktop (https://www.docker.com/products/docker-desktop/).
 
 ## Como rodar o projeto
 
 Para rodar o projeto localmente, siga os passos abaixo:
 
-- Instale o Docker Desktop;
+1- Instale o Docker Desktop e o mantenha-o aberto durante a execução do jogo;
 
-- Baixe ou clone o repositório para sua máquina;
+2- Faça o download do repositório para o seu computador;
 
-- Dentro da pasta raiz do projeto, execute o arquivo setup.bat;
+3- Dentro da pasta raiz do projeto, clique com o botão direito no arquivo setup e selecione a opção "Executar como administrador";
 
-- Aguarde o processo de configuração e inicialização. Os containers do Docker serão construídos e iniciados automaticamente.
+4- Aguarde o processo de configuração e inicialização. O ambiente será configurado e os containers do Docker serão construídos e iniciados automaticamente.
 
-* Para encerrar o sistema, execute o arquivo stopSystem.bat;
+- Para desligar o ambiente configurado, execute o arquivo stopSystem na pasta raiz.
 
 ## Acessando o projeto
 
-- Jogo: Execute o arquivo EscapeRoomGame na pasta raiz;
+- Jogo: Após a configuração, o executável do jogo estará disponível na pasta game. Execute o arquivo EscapeRoomGame para iniciar o jogo;
 
-- Plataforma de personalização: Abra o navegador e acesse: http://localhost:3001.
+- Plataforma de personalização: Assim que a configuração for concluída, a plataforma de personalização será aberta automaticamente no seu navegador;
