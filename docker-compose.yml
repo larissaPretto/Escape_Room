@@ -41,6 +41,7 @@ services:
       - api-escape
     networks:
       - app-network
+    restart: always
 
 networks:
   app-network:
